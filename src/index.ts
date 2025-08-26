@@ -7,9 +7,9 @@ import { extractGuozaokeInfo } from "./guozaoke-extractor.js";
 
 // 创建 MCP 服务器实例
 const server = new McpServer({
-  name: "demo-server",
-  version: "1.0.0",
-  description: "一个简单的 MCP 服务器示例"
+  name: "guozaoke-mcp-server",
+  version: "1.0.1",
+  description: "过早客论坛信息获取 MCP 服务器"
 });
 
 
