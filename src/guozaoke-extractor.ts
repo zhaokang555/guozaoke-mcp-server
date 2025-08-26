@@ -33,10 +33,6 @@ interface Topic {
 interface HotTopic {
     title: string;
     url?: string;
-    author: {
-        username?: string | null;
-        avatar?: string;
-    };
 }
 
 interface GuozaokeData {
@@ -110,10 +106,6 @@ export function extractGuozaokeInfo(htmlContent: string): GuozaokeData {
             const hotTopic: HotTopic = {
                 title: $cell.find('.hot_topic_title a').text().trim(),
                 url: $cell.find('.hot_topic_title a').attr('href'),
-                author: {
-                    username: $cell.find('a img').attr('src')?.match(/avatar\/(\d+)\//)?.[1] || null,
-                    avatar: $cell.find('a img').attr('src')
-                }
             };
 
             if (hotTopic.title) {

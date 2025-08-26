@@ -52,6 +52,11 @@ server.registerTool(
 📝 **话题**
 ${data.topics.map((topic, index) => 
   `${index + 1}. ${topic.title} - ${topic.author.username} (${topic.replyCount}回复)`
+).join('\n')}
+
+🔥 **热门话题**
+${data.hotTopics.map((hotTopic, index) => 
+  `${index + 1}. ${hotTopic.title}}`
 ).join('\n')}`
           },
           {
