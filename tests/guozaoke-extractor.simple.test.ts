@@ -22,84 +22,14 @@ async function assertRejects(promise: Promise<any>, message: string) {
   }
 }
 
-// 模拟HTML生成函数
-function createMockHtml(): string {
-  return `
-    <!DOCTYPE html>
-    <html>
-      <head>
-        <title>过早客</title>
-        <meta name="description" content="过早客测试描述">
-        <meta name="keywords" content="过早客,测试">
-      </head>
-      <body>
-        <div class="usercard">
-          <div class="username">testuser</div>
-          <img class="avatar" src="/avatar/test.png" alt="">
-        </div>
-        
-        <div class="status-topic"><strong><a>5</a></strong></div>
-        <div class="status-reply"><strong><a>10</a></strong></div>
-        <div class="status-favorite"><strong><a>2</a></strong></div>
-        <div class="status-reputation"><strong>100</strong></div>
-        
-        <div class="topic-item">
-          <img class="avatar" src="/avatar1.png" alt="">
-          <div class="main">
-            <h3 class="title">
-              <a href="/t/1">测试话题1</a>
-            </h3>
-            <div class="meta">
-              <span class="node"><a href="/node/test">测试节点</a></span>
-              <span class="username"><a href="/u/user1">user1</a></span>
-              <span class="last-touched">1分钟前</span>
-              <span class="last-reply-username"><strong>replier1</strong></span>
-            </div>
-          </div>
-          <div class="count"><a>5</a></div>
-        </div>
-        
-        <div class="hot-topics">
-          <div class="cell">
-            <div class="hot_topic_title">
-              <a href="/t/hot1">热门话题1</a>
-            </div>
-            <a><img src="/avatar2.png" alt=""></a>
-          </div>
-        </div>
-        
-        <div class="nodes-cloud">
-          <ul>
-            <li>
-              <label>测试分类</label>
-              <span class="nodes">
-                <a href="/node/test1">测试节点1</a>
-                <a href="/node/test2">测试节点2</a>
-              </span>
-            </li>
-          </ul>
-        </div>
-        
-        <div class="hot-nodes">
-          <div class="ui-content">
-            <a href="/node/hot1">热门节点1</a>
-            <a href="/node/hot2">热门节点2</a>
-          </div>
-        </div>
-        
-        <div class="community-status">
-          <dl>
-            <dt>注册成员</dt>
-            <dd>1000</dd>
-          </dl>
-          <dl>
-            <dt>节点</dt>
-            <dd>20</dd>
-          </dl>
-        </div>
-      </body>
-    </html>
-  `;
+// 读取真实HTML文件的函数
+async function createMockHtml(): Promise<string> {
+  try {
+    const htmlContent = await fs.readFile('tests/guozaoke.html', 'utf-8');
+    return htmlContent;
+  } catch (error) {
+    throw new Error(`无法读取 tests/guozaoke.html 文件: ${error.message}`);
+  }
 }
 
 async function runTests() {
@@ -110,10 +40,10 @@ async function runTests() {
   // 准备测试数据
   let sampleHtml: string;
   try {
-    sampleHtml = await fs.readFile('guozaoke.html', 'utf8');
+    sampleHtml = await fs.readFile('tests/guozaoke.html', 'utf8');
   } catch (error) {
-    console.log('⚠️  警告: guozaoke.html 文件不存在，使用模拟HTML进行测试');
-    sampleHtml = createMockHtml();
+    console.log('⚠️  警告: tests/guozaoke.html 文件不存在，使用模拟HTML进行测试');
+    sampleHtml = await createMockHtml();
   }
 
   // 测试 readHtmlFile 函数
@@ -267,7 +197,7 @@ async function runTests() {
   console.log('\n📄 测试 extractGuozaokeInfoFromFile 函数:');
   try {
     testCount++;
-    const testContent = createMockHtml();
+    const testContent = await createMockHtml();
     const testFile = 'test-combined.html';
 
     await fs.writeFile(testFile, testContent);
