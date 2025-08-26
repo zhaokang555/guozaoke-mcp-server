@@ -8,17 +8,17 @@ import { extractGuozaokeInfo } from "./guozaoke-extractor.js";
 // 创建 MCP 服务器实例
 const server = new McpServer({
   name: "guozaoke-mcp-server",
-  version: "1.0.1",
+  version: "1.0.2",
   description: "过早客论坛信息获取 MCP 服务器"
 });
 
 
 // 注册过早客信息获取工具
 server.registerTool(
-  "fetch-guozaoke",
+  "fetch-guozaoke-topic-list",
   {
     title: "获取过早客论坛信息",
-    description: "从过早客论坛网站获取话题列表和全站热门话题列表, 支持分页。",
+    description: "从过早客论坛网站获取话题列表, 支持分页。",
     inputSchema: {
       page: z.number().int().positive().optional().describe("要获取的页码，默认为第1页")
     }
@@ -41,13 +41,13 @@ server.registerTool(
       const htmlContent = await response.text();
 
       // 使用提取函数解析HTML并获取结构化数据
-      const data = extractGuozaokeInfo(htmlContent);
+      const {site, topics} = extractGuozaokeInfo(htmlContent);
 
       return {
         content: [
           {
             type: "text",
-            text: JSON.stringify(data, null, 2)
+            text: JSON.stringify({site, topics}, null, 2)
           }
         ]
       };
