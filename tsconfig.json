@@ -16,7 +16,8 @@
     "declarationMap": true,
     "sourceMap": true,
     "allowImportingTsExtensions": false,
-    "isolatedModules": true
+    "isolatedModules": true,
+    "useUnknownInCatchVariables": false
   },
   "include": [
     "src/**/*"

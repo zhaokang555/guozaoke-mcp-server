@@ -122,14 +122,14 @@ async function runTests() {
     testCount++;
     const testContent = '<html><body>Test</body></html>';
     const testFile = 'test-temp.html';
-    
+
     await fs.writeFile(testFile, testContent);
     const result = await readHtmlFile(testFile);
-    
+
     assert(result === testContent, 'readHtmlFile should read file content correctly');
     assert(typeof result === 'string', 'readHtmlFile should return string');
     passCount++;
-    
+
     // 清理
     await fs.unlink(testFile);
   } catch (error) {
@@ -149,7 +149,7 @@ async function runTests() {
   try {
     testCount++;
     const result = extractGuozaokeInfo(sampleHtml);
-    
+
     // 基本结构测试
     assert(typeof result === 'object', 'extractGuozaokeInfo should return object');
     assert(result.hasOwnProperty('site'), 'Result should have site property');
@@ -164,7 +164,7 @@ async function runTests() {
   try {
     testCount++;
     const result = extractGuozaokeInfo(sampleHtml);
-    
+
     // 网站信息测试
     assert(typeof result.site.title === 'string', 'Site title should be string');
     assert(result.site.title.length > 0, 'Site title should not be empty');
@@ -176,11 +176,11 @@ async function runTests() {
   try {
     testCount++;
     const result = extractGuozaokeInfo(sampleHtml);
-    
+
     // 话题列表测试
     assert(Array.isArray(result.topics), 'Topics should be array');
     assert(result.totalTopics === result.topics.length, 'Total topics should match array length');
-    
+
     if (result.topics.length > 0) {
       const firstTopic = result.topics[0];
       assert(typeof firstTopic.id === 'number', 'Topic ID should be number');
@@ -196,7 +196,7 @@ async function runTests() {
   try {
     testCount++;
     const result = extractGuozaokeInfo(sampleHtml);
-    
+
     // 其他数组属性测试
     assert(Array.isArray(result.hotTopics), 'Hot topics should be array');
     assert(Array.isArray(result.nodeCategories), 'Node categories should be array');
@@ -209,7 +209,7 @@ async function runTests() {
   try {
     testCount++;
     const result = extractGuozaokeInfo(sampleHtml);
-    
+
     // 用户信息测试
     const user = result.currentUser;
     assert(typeof user.topics === 'number', 'User topics should be number');
@@ -228,7 +228,7 @@ async function runTests() {
   try {
     testCount++;
     const result = extractGuozaokeInfo(sampleHtml);
-    
+
     // 时间戳测试
     const date = new Date(result.extractedAt);
     assert(!isNaN(date.getTime()), 'Extracted timestamp should be valid date');
@@ -242,7 +242,7 @@ async function runTests() {
   try {
     testCount++;
     const result = extractGuozaokeInfo('');
-    
+
     assert(typeof result === 'object', 'Should handle empty HTML');
     assert(Array.isArray(result.topics), 'Empty HTML should return empty topics array');
     assert(result.topics.length === 0, 'Empty HTML should have no topics');
@@ -256,7 +256,7 @@ async function runTests() {
     testCount++;
     const malformedHtml = '<html><body><div class="topic-item"><broken>';
     const result = extractGuozaokeInfo(malformedHtml);
-    
+
     assert(typeof result === 'object', 'Should handle malformed HTML without throwing');
     passCount++;
   } catch (error) {
@@ -269,16 +269,16 @@ async function runTests() {
     testCount++;
     const testContent = createMockHtml();
     const testFile = 'test-combined.html';
-    
+
     await fs.writeFile(testFile, testContent);
     const result = await extractGuozaokeInfoFromFile(testFile);
-    
+
     assert(typeof result === 'object', 'extractGuozaokeInfoFromFile should return object');
     assert(result.hasOwnProperty('site'), 'Result should have site property');
     assert(result.hasOwnProperty('topics'), 'Result should have topics property');
     assert(typeof result.extractedAt === 'string', 'Result should have valid timestamp');
     passCount++;
-    
+
     // 清理
     await fs.unlink(testFile);
   } catch (error) {
