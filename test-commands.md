@@ -25,17 +25,9 @@ npm run inspect
 
 ### Tools (工具)
 
-1. **hello** - 问候工具
-   - 参数: `{ "name": "Alice" }`
-   - 预期输出: 个性化问候消息
-
-2. **calculate** - 计算器
-   - 参数: `{ "operation": "add", "a": 10, "b": 5 }`
-   - 支持操作: add, subtract, multiply, divide
-
-3. **current-time** - 获取时间
-   - 参数: `{ "timezone": "Asia/Shanghai" }` (可选)
-   - 输出: 当前时间
+1. **fetch-guozaoke** - 获取过早客论坛信息
+   - 参数: `{ "url": "https://www.guozaoke.com/" }` (可选，默认为首页)
+   - 输出: 结构化的论坛数据，包括热门话题、节点分类、社区统计等
 
 ### Resources (资源)
 

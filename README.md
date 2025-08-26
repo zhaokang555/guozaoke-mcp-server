@@ -7,9 +7,7 @@
 这个示例服务器提供了以下功能：
 
 ### 工具 (Tools)
-- **hello**: 个性化问候工具
-- **calculate**: 基本数学计算器（加减乘除）
-- **current-time**: 获取当前时间（支持时区）
+- **fetch-guozaoke**: 获取过早客论坛信息工具，可以从过早客网站获取热门话题、节点信息等结构化数据
 
 ### 资源 (Resources)
 - **config://server-info**: 服务器配置信息
@@ -116,9 +114,8 @@ npm run inspect
 
 启动服务器后，你可以通过 Claude Desktop 使用以下功能：
 
-- 问候: "使用 hello 工具向 Alice 问好"
-- 计算: "用计算器工具计算 15 + 25"
-- 时间: "获取北京时间"
+- 获取论坛信息: "使用 fetch-guozaoke 工具获取过早客首页信息"
+- 获取特定页面: "使用 fetch-guozaoke 工具获取 https://www.guozaoke.com/some-page 的内容"
 - 查看服务器信息: "显示 config://server-info 资源"
 
 ## 开发说明

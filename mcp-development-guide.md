@@ -69,22 +69,23 @@ const server = new McpServer({
   description: "我的第一个 MCP 服务器"
 });
 
-// 注册一个简单的工具
+// 注册一个网页数据获取工具
 server.registerTool(
-  "hello",
+  "fetch-data",
   {
-    title: "Hello World",
-    description: "返回一个问候消息",
-    inputSchema: z.object({
-      name: z.string().describe("要问候的名字")
-    })
+    title: "Fetch Web Data",
+    description: "从网页获取结构化数据",
+    inputSchema: {
+      url: z.string().url().describe("要获取的网页URL")
+    }
   },
-  async ({ name }) => {
+  async ({ url }) => {
+    // 网页数据获取逻辑
     return {
       content: [
         {
           type: "text",
-          text: `你好，${name}！欢迎使用 MCP！`
+          text: `成功获取数据: ${url}`
         }
       ]
     };
