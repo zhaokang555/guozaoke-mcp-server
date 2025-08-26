@@ -5,6 +5,10 @@ import { z } from "zod";
 import fetch from "node-fetch";
 import { extractGuozaokeInfo } from "./guozaoke-extractor.js";
 import { extractTopicDetails } from "./guozaoke-topic-extractor.js";
+import { isGenericLoginPage } from "./login-detector.js";
+
+// 读取环境变量中的cookie
+const COOKIE = process.env.GUOZAOKE_COOKIE || '';
 
 // 创建 MCP 服务器实例
 const server = new McpServer({
@@ -29,10 +33,16 @@ server.registerTool(
       const targetUrl = `https://www.guozaoke.com/?p=${page || 1}`;
 
       // 发起HTTP请求获取HTML内容
+      const headers: Record<string, string> = {
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+      };
+
+      if (COOKIE) {
+        headers['Cookie'] = COOKIE;
+      }
+
       const response = await fetch(targetUrl, {
-        headers: {
-          'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
-        }
+        headers
       });
 
       if (!response.ok) {
@@ -83,10 +93,16 @@ server.registerTool(
       const targetUrl = `https://www.guozaoke.com/t/${topicId}`;
 
       // 发起HTTP请求获取HTML内容
+      const headers: Record<string, string> = {
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+      };
+
+      if (COOKIE) {
+        headers['Cookie'] = COOKIE;
+      }
+
       const response = await fetch(targetUrl, {
-        headers: {
-          'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
-        }
+        headers
       });
 
       if (!response.ok) {
@@ -94,6 +110,18 @@ server.registerTool(
       }
 
       const htmlContent = await response.text();
+
+      // 检查是否为登录页面
+      if (isGenericLoginPage(htmlContent)) {
+        return {
+          content: [
+            {
+              type: "text",
+              text: `⚠️ 检测到登录页面，无法访问话题详情。请设置环境变量 GUOZAOKE_COOKIE 来提供登录凭据。`
+            }
+          ]
+        };
+      }
 
       // 使用提取函数解析HTML并获取结构化数据
       const result = extractTopicDetails(htmlContent);

@@ -1,0 +1,163 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, target-densitydpi=240, initial-scale=1.0, maximum-scale=3.0, user-scalable=1" name="viewport" />
+  <meta content="yes" name="apple-mobile-web-app-capable" />
+  <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="referrer" content="no-referrer">
+  <title>过早客</title>
+  <meta name="keywords" content="过早客，光谷社区，武汉，guanggu，光谷软件园，guozaoke.com，guanggoo.com，光谷，创业，社区" />
+  <meta name="description" content="过早客是源自武汉的高端社交网络，这里有关于创业、创意、IT、金融等最热话题的交流，也有招聘问答、活动交友等最新资讯的发布。" />
+  <script type="text/javascript" src="https://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+  <script type="text/javascript" src="https://apps.bdimg.com/libs/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="https://cdn.guozaoke.com//static/js/base/in-min.js"></script>
+  <link rel="stylesheet" href="https://apps.bdimg.com/libs/bootstrap/3.3.4/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/3.2.1/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="https://cdn.guozaoke.com//static/css/main1003v3.css" />
+  <link rel="apple-touch-icon" href="https://cdn.guozaoke.com//static/images/lowshine.icon.png">
+  <script type="text/javascript">
+    jQuery(document).ready(function() {
+      $('.J_search').submit(function(e) {
+        var _node = $(this);
+        var query = _node.find('input').val();
+        e.preventDefault();
+        window.open('https://cn.bing.com/search?q=site:guozaoke.com/t%20' + query, "_blank");
+      });
+    });
+  </script>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-YTS4ZXTQK4"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-YTS4ZXTQK4');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2411247616959293"
+          crossorigin="anonymous"></script>
+</head>
+<body>
+<nav class="navbar navbar-default top-navbar">
+  <div class="container-fluid container">
+    <div >
+      <a class="navbar-brand" href="/"><img width="150" height="28" border="0" align="default" alt="过早客" src="https://cdn.guozaoke.com//static/images/guanggoonew2.png" /></a>
+      <div class="divider-vertical"></div>
+
+    </div>
+    <div id="navbar5" >
+      <ul class="nav navbar-nav navbar-left hidden-xs">
+        <li>
+          <a href="/">首页</a>
+        </li>
+        <li>
+          <a href="/nodes">节点</a>
+        </li>
+        <li>
+          <a href="/members">成员</a>
+        </li>
+        <li>
+          <a href="/faq">广告投放</a>
+        </li>
+      </ul>
+      <div class="nav navbar-left form navbar-form hidden-sm hidden-xs">
+        <div class="form-group">
+          <form class="J_search">
+            <input type="text" name="" id="" class="form-control" placeholder="Search">
+          </form>
+        </div>
+      </div>
+
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+          <a href="/login" class="nav-collapse collapse">登录</a>
+        </li>
+        <li><a href="/register" class="nav-collapse collapse">注册</a></li>
+      </ul>
+    </div>
+  </div><!-- /.container-fluid -->
+</nav>
+
+
+<div class="container mt15">
+  <div class="row">
+    <div class="col-md-9 sidebar-left">
+      <div class="container-box">
+        <form class="form-horizontal" action='' method="POST">
+          <fieldset>
+            <div id="legend">
+              <legend class="">登录</legend>
+            </div>
+
+            <ul class="alert alert-danger">
+              <li>请先登录社区再完成操作</li>
+            </ul>
+
+            <div class="form-group">
+              <!-- E-mail -->
+              <label class="control-label col-sm-3" for="email">登录账户</label>
+              <div class="controls col-sm-5">
+                <input type="text" id="email" name="email" placeholder="" class="form-control">
+                <p class="help-block">支持通过E-mail，手机号登录</p>
+              </div>
+              <div class="col-sm-4"></div>
+            </div>
+
+            <div class="form-group">
+              <!-- Password-->
+              <label class="control-label col-sm-3" for="password">密码</label>
+              <div class="controls  col-sm-5">
+                <input type="password" id="password" name="password" placeholder="" class="form-control">
+                <p class="help-block">请输入您的密码（不少于6个字符）</p>
+              </div>
+              <div class="col-sm-4"></div>
+            </div>
+
+            <div class="form-group">
+              <div class="col-sm-3"></div>
+              <!-- Button -->
+              <div class="controls col-sm-9">
+                <button class="btn btn-success">登录</button>
+                <a href="/register" class="ml10 mr10 btn btn-default">注册账号</a>
+                <a href="/forgot" class="btn btn-default">忘记密码了</a>
+              </div>
+            </div>
+          </fieldset>
+          <input type="hidden" name="_xsrf" value="89a3a95282284c4f8b564b79d80e1a69"/>
+        </form>
+      </div>
+    </div>
+
+    <div class="col-md-3 sidebar-right mt10">
+      <div class="container-box">
+        <div class="pl10"><a href="/setting">用户中心</a></div>
+        <div class="mt10 pl10"><a href="/setting/avatar">设置头像</a></div>
+        <div class="mt10 pl10"><a href="/setting/password">设置密码</a></div>
+        <div class="mt10 pl10"><a href="/">返回首页</a></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="footer mt15">
+  <div class="container">
+    <div class="footer-bg">
+      <p align="center"class="links">
+        <span>过早客微信公众号：guozaoke</span>
+        <span> • </span>
+        <span>过早客新浪微博：<a href="https://weibo.com/guozaoke" target="_blank">@过早客</a></span>
+        <span> • </span>
+        <span>广告投放合作微信：fullygroup50</span>
+        <span><a href="https://beian.miit.gov.cn" target="_blank">鄂ICP备2021016276号-2</a></span>
+        <span> • </span>
+        <span><a href="http://www.beian.gov.cn/portal/registerSystemInfo" target="_blank">鄂公网安备42018502001446号</a></span>
+      </p>
+      <p class="fade-color">
+      </p>
+    </div>
+  </div>
+</div>
+</body>
+</html>

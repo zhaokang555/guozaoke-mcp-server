@@ -19,6 +19,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - **MCP Inspector**: `npm run inspect` 启动后在浏览器中打开显示的 URL，可以测试工具、资源和提示模板
 - 服务器日志输出到 stderr（使用 console.error），避免与 stdio 传输协议冲突
 
+### 环境变量配置
+- `GUOZAOKE_COOKIE`: 用于过早客论坛认证的Cookie字符串（可选）
+  - 如果设置了此环境变量，所有对过早客网站的HTTP请求都会携带此Cookie
+  - 格式示例：`"session=abc123; auth_token=xyz789"`
+  - 用于访问需要登录的内容或提升访问权限
+
 ## 代码架构
 
 ### 核心架构
