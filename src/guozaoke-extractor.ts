@@ -44,7 +44,6 @@ interface GuozaokeData {
     topics: Topic[];
     hotTopics: HotTopic[];
     hotNodes: Node[];
-    extractedAt: string;
 }
 
 /**
@@ -138,7 +137,6 @@ export function extractGuozaokeInfo(htmlContent: string): GuozaokeData {
             topics,
             hotTopics,
             hotNodes,
-            extractedAt: new Date().toISOString(),
         };
 
     } catch (error) {

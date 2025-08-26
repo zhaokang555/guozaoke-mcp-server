@@ -52,9 +52,7 @@ server.registerTool(
 📝 **话题**
 ${data.topics.map((topic, index) => 
   `${index + 1}. ${topic.title} - ${topic.author.username} (${topic.replyCount}回复)`
-).join('\n')}
-
-⏰ 数据获取时间: ${data.extractedAt}`
+).join('\n')}`
           },
           {
             type: "text",
