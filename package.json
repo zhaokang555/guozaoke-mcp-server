@@ -1,0 +1,42 @@
+{
+  "name": "mcp-demo-server",
+  "version": "1.0.0",
+  "description": "一个简单的 MCP (Model Context Protocol) 示例服务器",
+  "main": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsx src/index.ts",
+    "inspect": "npx @modelcontextprotocol/inspector tsx src/index.ts",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "test:verbose": "jest --verbose"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "ai",
+    "claude",
+    "tools"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "@types/node-fetch": "^2.6.13",
+    "cheerio": "^1.1.2",
+    "node-fetch": "^3.3.2",
+    "zod": "^3.23.0"
+  },
+  "devDependencies": {
+    "@jest/globals": "^30.0.5",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^20.0.0",
+    "jest": "^30.0.5",
+    "ts-jest": "^29.4.1",
+    "tsx": "^4.0.0",
+    "typescript": "^5.0.0"
+  }
+}
