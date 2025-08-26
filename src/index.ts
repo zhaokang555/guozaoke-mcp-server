@@ -18,14 +18,14 @@ server.registerTool(
   "fetch-guozaoke",
   {
     title: "获取过早客论坛信息",
-    description: "从过早客论坛网站获取最新的话题、热门讨论、节点信息等结构化数据",
+    description: "从过早客论坛网站获取指定页面的话题、热门讨论、节点信息等结构化数据，支持分页功能",
     inputSchema: {
-      url: z.string().url().optional().describe("要获取的URL，默认为过早客首页")
+      page: z.number().int().positive().optional().describe("要获取的页码，默认为第1页")
     }
   },
-  async ({ url }) => {
+  async ({ page }) => {
     try {
-      const targetUrl = url || "https://www.guozaoke.com/";
+      const targetUrl = `https://www.guozaoke.com/?p=${page || 1}`;
       
       // 发起HTTP请求获取HTML内容
       const response = await fetch(targetUrl, {
@@ -47,7 +47,7 @@ server.registerTool(
         content: [
           {
             type: "text",
-            text: `成功获取过早客论坛信息！
+            text: `成功获取过早客论坛信息！（第 ${page || 1} 页）
 
 📊 **基本统计**
 - 话题总数: ${data.totalTopics}
