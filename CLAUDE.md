@@ -25,6 +25,34 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
   - 格式示例：`"session=abc123; auth_token=xyz789"`
   - 用于访问需要登录的内容或提升访问权限
 
+#### .env.local文件支持
+项目支持通过`.env.local`文件配置环境变量：
+
+1. **复制示例文件**：
+   ```bash
+   cp .env.local.example .env.local
+   ```
+
+2. **编辑配置**：
+   ```bash
+   # .env.local 文件内容
+   GUOZAOKE_COOKIE=session=abc123; auth_token=xyz789
+   ```
+
+3. **获取Cookie的方法**：
+   - 在浏览器中登录过早客论坛
+   - 打开开发者工具 (F12) 
+   - 进入 Application/Storage 标签页
+   - 点击 Cookies > https://www.guozaoke.com
+   - 复制完整的Cookie字符串
+
+4. **使用inspect命令**：
+   ```bash
+   npm run inspect  # 会自动读取.env.local中的配置
+   ```
+
+**注意**: `.env.local`文件已添加到`.gitignore`，不会被提交到版本库中，确保Cookie安全。
+
 ## 代码架构
 
 ### 核心架构

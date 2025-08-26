@@ -5,7 +5,7 @@ import { z } from "zod";
 import fetch from "node-fetch";
 import { extractGuozaokeInfo } from "./guozaoke-extractor.js";
 import { extractTopicDetails } from "./guozaoke-topic-extractor.js";
-import { isGenericLoginPage } from "./login-detector.js";
+import { isLoginPage } from './login-detector.js';
 
 // 读取环境变量中的cookie
 const COOKIE = process.env.GUOZAOKE_COOKIE || '';
@@ -112,12 +112,20 @@ server.registerTool(
       const htmlContent = await response.text();
 
       // 检查是否为登录页面
-      if (isGenericLoginPage(htmlContent)) {
+      if (isLoginPage(htmlContent)) {
         return {
           content: [
             {
               type: "text",
               text: `⚠️ 检测到登录页面，无法访问话题详情。请设置环境变量 GUOZAOKE_COOKIE 来提供登录凭据。`
+            },
+            {
+              type: "text",
+              text: JSON.stringify(headers, null, 2)
+            },
+            {
+              type: "text",
+              text: htmlContent
             }
           ]
         };

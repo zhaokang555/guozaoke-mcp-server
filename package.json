@@ -8,7 +8,7 @@
     "build": "tsc",
     "start": "node dist/index.js",
     "dev": "tsx src/index.ts",
-    "inspect": "npx @modelcontextprotocol/inspector tsx src/index.ts",
+    "inspect": "node -r dotenv/config --env-file=.env.local node_modules/.bin/mcp-inspector tsx src/index.ts",
     "test": "tsx tests/guozaoke-extractor.simple.test.ts"
   },
   "keywords": [
@@ -28,7 +28,9 @@
     "zod": "^3.23.0"
   },
   "devDependencies": {
+    "@modelcontextprotocol/inspector": "^0.16.5",
     "@types/node": "^20.0.0",
+    "dotenv": "^17.2.1",
     "tsx": "^4.0.0",
     "typescript": "^5.0.0"
   }
