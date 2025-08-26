@@ -56,7 +56,7 @@ ${data.topics.map((topic, index) =>
 
 🔥 **热门话题**
 ${data.hotTopics.map((hotTopic, index) => 
-  `${index + 1}. ${hotTopic.title}}`
+  `${index + 1}. ${hotTopic.title}`
 ).join('\n')}`
           },
           {
