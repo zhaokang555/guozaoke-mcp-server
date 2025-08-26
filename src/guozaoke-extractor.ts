@@ -60,7 +60,6 @@ interface GuozaokeData {
     hotTopics: HotTopic[];
     nodeCategories: NodeCategory[];
     hotNodes: Node[];
-    communityStats: Record<string, number>;
     extractedAt: string;
     totalTopics: number;
 }
@@ -87,21 +86,21 @@ export async function readHtmlFile(htmlPath: string): Promise<string> {
 export function extractGuozaokeInfo(htmlContent: string): GuozaokeData {
     try {
         const $ = cheerio.load(htmlContent);
-        
+
         // 提取网站基本信息
         const siteInfo: SiteInfo = {
             title: $('title').text().trim(),
             description: $('meta[name="description"]').attr('content'),
             keywords: $('meta[name="keywords"]').attr('content')
         };
-        
+
         // 提取话题列表
         const topics: Topic[] = [];
         $('.topic-item').each((index, element) => {
             const $item = $(element);
             const $main = $item.find('.main');
             const $meta = $main.find('.meta');
-            
+
             const topic: Topic = {
                 id: index + 1,
                 title: $main.find('.title a').text().trim(),
@@ -119,10 +118,10 @@ export function extractGuozaokeInfo(htmlContent: string): GuozaokeData {
                 lastReplyUser: $meta.find('.last-reply-username strong').text().trim() || null,
                 replyCount: parseInt($item.find('.count a').text().trim()) || 0
             };
-            
+
             topics.push(topic);
         });
-        
+
         // 提取节点分类
         const nodeCategories: NodeCategory[] = [];
         $('.nodes-cloud ul li').each((index, element) => {
@@ -131,7 +130,7 @@ export function extractGuozaokeInfo(htmlContent: string): GuozaokeData {
                 name: $category.find('label').text().trim(),
                 nodes: []
             };
-            
+
             $category.find('.nodes a').each((idx, nodeEl) => {
                 const $node = $(nodeEl);
                 category.nodes.push({
@@ -139,12 +138,12 @@ export function extractGuozaokeInfo(htmlContent: string): GuozaokeData {
                     url: $node.attr('href')
                 });
             });
-            
+
             if (category.name && category.nodes.length > 0) {
                 nodeCategories.push(category);
             }
         });
-        
+
         // 提取热门话题
         const hotTopics: HotTopic[] = [];
         $('.hot-topics .cell').each((index, element) => {
@@ -157,12 +156,12 @@ export function extractGuozaokeInfo(htmlContent: string): GuozaokeData {
                     avatar: $cell.find('a img').attr('src')
                 }
             };
-            
+
             if (hotTopic.title) {
                 hotTopics.push(hotTopic);
             }
         });
-        
+
         // 提取热门节点
         const hotNodes: Node[] = [];
         $('.hot-nodes .ui-content a').each((index, element) => {
@@ -172,18 +171,7 @@ export function extractGuozaokeInfo(htmlContent: string): GuozaokeData {
                 url: $node.attr('href')
             });
         });
-        
-        // 提取社区统计信息
-        const communityStats: Record<string, number> = {};
-        $('.community-status dl').each((index, element) => {
-            const $dl = $(element);
-            const key = $dl.find('dt').text().trim();
-            const value = parseInt($dl.find('dd').text().trim()) || 0;
-            if (key) {
-                communityStats[key] = value;
-            }
-        });
-        
+
         // 提取当前用户信息
         const currentUser: CurrentUser = {
             username: $('.usercard .username').text().trim() || null,
@@ -193,7 +181,7 @@ export function extractGuozaokeInfo(htmlContent: string): GuozaokeData {
             favorites: parseInt($('.status-favorite strong a').text()) || 0,
             reputation: parseInt($('.status-reputation strong').text()) || 0
         };
-        
+
         return {
             site: siteInfo,
             currentUser,
@@ -201,11 +189,10 @@ export function extractGuozaokeInfo(htmlContent: string): GuozaokeData {
             hotTopics,
             nodeCategories,
             hotNodes,
-            communityStats,
             extractedAt: new Date().toISOString(),
             totalTopics: topics.length
         };
-        
+
     } catch (error) {
         console.error('提取信息时出错:', error);
         throw error;
@@ -225,7 +212,7 @@ export async function extractGuozaokeInfoFromFile(htmlPath: string): Promise<Guo
 // 如果直接运行此文件，则执行提取并输出JSON
 if (import.meta.url === `file://${process.argv[1]}`) {
     const htmlPath = process.argv[2] || './guozaoke.html';
-    
+
     extractGuozaokeInfoFromFile(htmlPath)
         .then(data => {
             console.log(JSON.stringify(data, null, 2));

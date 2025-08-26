@@ -51,10 +51,6 @@ server.registerTool(
 
 📊 **基本统计**
 - 话题总数: ${data.totalTopics}
-- 注册成员: ${data.communityStats['注册成员'] || 'N/A'}
-- 节点数: ${data.communityStats['节点'] || 'N/A'}
-- 主题总数: ${data.communityStats['主题'] || 'N/A'}
-- 回复总数: ${data.communityStats['回复'] || 'N/A'}
 
 📝 **话题**
 ${data.topics.map((topic, index) => 
