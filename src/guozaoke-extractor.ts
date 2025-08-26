@@ -39,16 +39,10 @@ interface HotTopic {
     };
 }
 
-interface NodeCategory {
-    name: string;
-    nodes: Node[];
-}
-
 interface GuozaokeData {
     site: SiteInfo;
     topics: Topic[];
     hotTopics: HotTopic[];
-    nodeCategories: NodeCategory[];
     hotNodes: Node[];
     extractedAt: string;
 }
@@ -111,28 +105,6 @@ export function extractGuozaokeInfo(htmlContent: string): GuozaokeData {
             topics.push(topic);
         });
 
-        // 提取节点分类
-        const nodeCategories: NodeCategory[] = [];
-        $('.nodes-cloud ul li').each((index, element) => {
-            const $category = $(element);
-            const category: NodeCategory = {
-                name: $category.find('label').text().trim(),
-                nodes: []
-            };
-
-            $category.find('.nodes a').each((idx, nodeEl) => {
-                const $node = $(nodeEl);
-                category.nodes.push({
-                    name: $node.text().trim(),
-                    url: $node.attr('href')
-                });
-            });
-
-            if (category.name && category.nodes.length > 0) {
-                nodeCategories.push(category);
-            }
-        });
-
         // 提取热门话题
         const hotTopics: HotTopic[] = [];
         $('.hot-topics .cell').each((index, element) => {
@@ -165,7 +137,6 @@ export function extractGuozaokeInfo(htmlContent: string): GuozaokeData {
             site: siteInfo,
             topics,
             hotTopics,
-            nodeCategories,
             hotNodes,
             extractedAt: new Date().toISOString(),
         };

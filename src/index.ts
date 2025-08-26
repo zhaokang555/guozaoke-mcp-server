@@ -54,11 +54,6 @@ ${data.topics.map((topic, index) =>
   `${index + 1}. ${topic.title} - ${topic.author.username} (${topic.replyCount}回复)`
 ).join('\n')}
 
-📋 **节点分类**
-${data.nodeCategories.map(category => 
-  `${category.name}: ${category.nodes.map(node => node.name).join(', ')}`
-).join('\n')}
-
 ⏰ 数据获取时间: ${data.extractedAt}`
           },
           {
