@@ -18,8 +18,8 @@ const server = new McpServer({
 server.registerTool(
   "fetch-guozaoke-topic-list",
   {
-    title: "获取过早客论坛信息",
-    description: "从过早客论坛网站获取话题列表, 支持分页。",
+    title: "获取过早客话题列表",
+    description: "从过早客论坛网站获取当前页面的话题列表，支持分页浏览。",
     inputSchema: {
       page: z.number().int().positive().optional().describe("要获取的页码，默认为第1页")
     }

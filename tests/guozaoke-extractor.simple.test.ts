@@ -1,5 +1,5 @@
 import * as fs from 'fs/promises';
-import { readHtmlFile, extractGuozaokeInfo, extractGuozaokeInfoFromFile } from '../src/guozaoke-extractor.js';
+import { extractGuozaokeInfo } from '../src/guozaoke-extractor.js';
 
 // 简单的断言函数
 function assert(condition: boolean, message: string) {
@@ -9,18 +9,6 @@ function assert(condition: boolean, message: string) {
   console.log(`✅ ${message}`);
 }
 
-// 异步断言函数
-async function assertRejects(promise: Promise<any>, message: string) {
-  try {
-    await promise;
-    throw new Error(`❌ ${message} - Expected rejection but promise resolved`);
-  } catch (error) {
-    if (error.message.includes('Expected rejection')) {
-      throw error;
-    }
-    console.log(`✅ ${message}`);
-  }
-}
 
 // 读取真实HTML文件的函数
 async function createMockHtml(): Promise<string> {
@@ -46,33 +34,6 @@ async function runTests() {
     sampleHtml = await createMockHtml();
   }
 
-  // 测试 readHtmlFile 函数
-  console.log('📂 测试 readHtmlFile 函数:');
-  try {
-    testCount++;
-    const testContent = '<html><body>Test</body></html>';
-    const testFile = 'test-temp.html';
-
-    await fs.writeFile(testFile, testContent);
-    const result = await readHtmlFile(testFile);
-
-    assert(result === testContent, 'readHtmlFile should read file content correctly');
-    assert(typeof result === 'string', 'readHtmlFile should return string');
-    passCount++;
-
-    // 清理
-    await fs.unlink(testFile);
-  } catch (error) {
-    console.error(`❌ readHtmlFile 测试失败: ${error.message}`);
-  }
-
-  try {
-    testCount++;
-    await assertRejects(readHtmlFile('non-existent-file.html'), 'readHtmlFile should reject for non-existent file');
-    passCount++;
-  } catch (error) {
-    console.error(`❌ readHtmlFile 错误处理测试失败: ${error.message}`);
-  }
 
   // 测试 extractGuozaokeInfo 函数
   console.log('\n🔍 测试 extractGuozaokeInfo 函数:');
@@ -161,38 +122,6 @@ async function runTests() {
     console.error(`❌ 畸形HTML测试失败: ${error.message}`);
   }
 
-  // 测试 extractGuozaokeInfoFromFile 函数
-  console.log('\n📄 测试 extractGuozaokeInfoFromFile 函数:');
-  try {
-    testCount++;
-    const testContent = await createMockHtml();
-    const testFile = 'test-combined.html';
-
-    await fs.writeFile(testFile, testContent);
-    const result = await extractGuozaokeInfoFromFile(testFile);
-
-    assert(typeof result === 'object', 'extractGuozaokeInfoFromFile should return object');
-    assert(result.hasOwnProperty('site'), 'Result should have site property');
-    assert(result.hasOwnProperty('topics'), 'Result should have topics property');
-    assert(result.hasOwnProperty('hotTopics'), 'Result should have hotTopics property');
-    passCount++;
-
-    // 清理
-    await fs.unlink(testFile);
-  } catch (error) {
-    console.error(`❌ extractGuozaokeInfoFromFile 测试失败: ${error.message}`);
-  }
-
-  try {
-    testCount++;
-    await assertRejects(
-      extractGuozaokeInfoFromFile('non-existent-file.html'),
-      'extractGuozaokeInfoFromFile should reject for non-existent file'
-    );
-    passCount++;
-  } catch (error) {
-    console.error(`❌ extractGuozaokeInfoFromFile 错误处理测试失败: ${error.message}`);
-  }
 
   // 测试结果总结
   console.log(`\n📊 测试结果总结:`);

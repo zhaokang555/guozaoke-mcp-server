@@ -3,11 +3,4 @@
 /.idea/learn-mcp.iml
 /.idea/modules.xml
 /.idea/vcs.xml
-/dist/guozaoke-extractor.d.ts
-/dist/guozaoke-extractor.d.ts.map
-/dist/guozaoke-extractor.js
-/dist/guozaoke-extractor.js.map
-/dist/index.d.ts
-/dist/index.d.ts.map
-/dist/index.js
-/dist/index.js.map
+/dist/

@@ -1,5 +1,4 @@
 import * as cheerio from 'cheerio';
-import fs from 'fs/promises';
 
 // 定义接口类型
 interface SiteInfo {
@@ -54,19 +53,6 @@ function extractIdFromUrl(url?: string): number {
     return match ? parseInt(match[1], 10) : 0;
 }
 
-/**
- * 读取HTML文件并返回字符串
- * @param htmlPath - HTML文件路径
- * @returns HTML字符串内容
- */
-export async function readHtmlFile(htmlPath: string): Promise<string> {
-    try {
-        return await fs.readFile(htmlPath, 'utf8');
-    } catch (error) {
-        console.error('读取HTML文件时出错:', error);
-        throw error;
-    }
-}
 
 /**
  * 从过早客HTML字符串中提取结构化信息
@@ -142,26 +128,4 @@ export function extractGuozaokeInfo(htmlContent: string): GuozaokeData {
     }
 }
 
-/**
- * 从HTML文件路径提取信息的便捷函数
- * @param htmlPath - HTML文件路径
- * @returns 提取的结构化数据
- */
-export async function extractGuozaokeInfoFromFile(htmlPath: string): Promise<GuozaokeData> {
-    const htmlContent = await readHtmlFile(htmlPath);
-    return extractGuozaokeInfo(htmlContent);
-}
 
-// 如果直接运行此文件，则执行提取并输出JSON
-if (import.meta.url === `file://${process.argv[1]}`) {
-    const htmlPath = process.argv[2] || './guozaoke.html';
-
-    extractGuozaokeInfoFromFile(htmlPath)
-        .then(data => {
-            console.log(JSON.stringify(data, null, 2));
-        })
-        .catch(error => {
-            console.error('Error:', error.message);
-            process.exit(1);
-        });
-}
