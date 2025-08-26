@@ -18,7 +18,7 @@ server.registerTool(
   "fetch-guozaoke",
   {
     title: "获取过早客论坛信息",
-    description: "从过早客论坛网站获取指定页面的话题、热门讨论、节点信息等结构化数据，支持分页功能",
+    description: "从过早客论坛网站获取话题列表和全站热门话题列表, 支持分页。",
     inputSchema: {
       page: z.number().int().positive().optional().describe("要获取的页码，默认为第1页")
     }
@@ -47,21 +47,7 @@ server.registerTool(
         content: [
           {
             type: "text",
-            text: `成功获取过早客论坛信息！（第 ${page || 1} 页）
-
-📝 **话题**
-${data.topics.map((topic, index) => 
-  `${index + 1}. ${topic.title} - ${topic.author.username} (${topic.replyCount}回复)`
-).join('\n')}
-
-🔥 **热门话题**
-${data.hotTopics.map((hotTopic, index) => 
-  `${index + 1}. ${hotTopic.title}`
-).join('\n')}`
-          },
-          {
-            type: "text",
-            text: `\n📄 **完整JSON数据:**\n\`\`\`json\n${JSON.stringify(data, null, 2)}\n\`\`\``
+            text: JSON.stringify(data, null, 2)
           }
         ]
       };
