@@ -20,6 +20,7 @@ interface Node {
 }
 
 interface Topic {
+    id: number;
     number: number;
     title: string;
     url?: string;
@@ -31,6 +32,7 @@ interface Topic {
 }
 
 interface HotTopic {
+    id: number;
     title: string;
     url?: string;
 }
@@ -39,6 +41,17 @@ interface GuozaokeData {
     site: SiteInfo;
     topics: Topic[];
     hotTopics: HotTopic[];
+}
+
+/**
+ * 从URL中提取ID
+ * @param url - URL字符串，例如 "/t/123817#reply42"
+ * @returns 提取的数字ID，如果没找到则返回0
+ */
+function extractIdFromUrl(url?: string): number {
+    if (!url) return 0;
+    const match = url.match(/\/t\/(\d+)/);
+    return match ? parseInt(match[1], 10) : 0;
 }
 
 /**
@@ -78,10 +91,12 @@ export function extractGuozaokeInfo(htmlContent: string): GuozaokeData {
             const $main = $item.find('.main');
             const $meta = $main.find('.meta');
 
+            const topicUrl = $main.find('.title a').attr('href');
             const topic: Topic = {
+                id: extractIdFromUrl(topicUrl),
                 number: index + 1,
                 title: $main.find('.title a').text().trim(),
-                url: $main.find('.title a').attr('href'),
+                url: topicUrl,
                 author: {
                     username: $meta.find('.username a').text().trim(),
                     profileUrl: $meta.find('.username a').attr('href'),
@@ -103,9 +118,11 @@ export function extractGuozaokeInfo(htmlContent: string): GuozaokeData {
         const hotTopics: HotTopic[] = [];
         $('.hot-topics .cell').each((index, element) => {
             const $cell = $(element);
+            const hotTopicUrl = $cell.find('.hot_topic_title a').attr('href');
             const hotTopic: HotTopic = {
+                id: extractIdFromUrl(hotTopicUrl),
                 title: $cell.find('.hot_topic_title a').text().trim(),
-                url: $cell.find('.hot_topic_title a').attr('href'),
+                url: hotTopicUrl,
             };
 
             if (hotTopic.title) {
