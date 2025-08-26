@@ -26,23 +26,23 @@ server.registerTool(
   async ({ page }) => {
     try {
       const targetUrl = `https://www.guozaoke.com/?p=${page || 1}`;
-      
+
       // 发起HTTP请求获取HTML内容
       const response = await fetch(targetUrl, {
         headers: {
           'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
         }
       });
-      
+
       if (!response.ok) {
         throw new Error(`HTTP请求失败: ${response.status} ${response.statusText}`);
       }
-      
+
       const htmlContent = await response.text();
-      
+
       // 使用提取函数解析HTML并获取结构化数据
       const data = extractGuozaokeInfo(htmlContent);
-      
+
       return {
         content: [
           {
@@ -56,8 +56,8 @@ server.registerTool(
 - 主题总数: ${data.communityStats['主题'] || 'N/A'}
 - 回复总数: ${data.communityStats['回复'] || 'N/A'}
 
-🔥 **热门话题** (前5个)
-${data.topics.slice(0, 5).map((topic, index) => 
+📝 **话题**
+${data.topics.map((topic, index) => 
   `${index + 1}. ${topic.title} - ${topic.author.username} (${topic.replyCount}回复)`
 ).join('\n')}
 
@@ -74,10 +74,10 @@ ${data.nodeCategories.map(category =>
           }
         ]
       };
-      
+
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : '未知错误';
-      
+
       return {
         content: [
           {
