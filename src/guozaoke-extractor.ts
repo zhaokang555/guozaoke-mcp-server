@@ -44,18 +44,8 @@ interface NodeCategory {
     nodes: Node[];
 }
 
-interface CurrentUser {
-    username?: string | null;
-    avatar?: string | null;
-    topics: number;
-    replies: number;
-    favorites: number;
-    reputation: number;
-}
-
 interface GuozaokeData {
     site: SiteInfo;
-    currentUser: CurrentUser;
     topics: Topic[];
     hotTopics: HotTopic[];
     nodeCategories: NodeCategory[];
@@ -172,19 +162,8 @@ export function extractGuozaokeInfo(htmlContent: string): GuozaokeData {
             });
         });
 
-        // 提取当前用户信息
-        const currentUser: CurrentUser = {
-            username: $('.usercard .username').text().trim() || null,
-            avatar: $('.usercard .avatar').attr('src') || null,
-            topics: parseInt($('.status-topic strong a').text()) || 0,
-            replies: parseInt($('.status-reply strong a').text()) || 0,
-            favorites: parseInt($('.status-favorite strong a').text()) || 0,
-            reputation: parseInt($('.status-reputation strong').text()) || 0
-        };
-
         return {
             site: siteInfo,
-            currentUser,
             topics,
             hotTopics,
             nodeCategories,
