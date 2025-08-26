@@ -49,9 +49,6 @@ server.registerTool(
             type: "text",
             text: `成功获取过早客论坛信息！（第 ${page || 1} 页）
 
-📊 **基本统计**
-- 话题总数: ${data.totalTopics}
-
 📝 **话题**
 ${data.topics.map((topic, index) => 
   `${index + 1}. ${topic.title} - ${topic.author.username} (${topic.replyCount}回复)`

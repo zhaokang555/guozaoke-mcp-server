@@ -51,7 +51,6 @@ interface GuozaokeData {
     nodeCategories: NodeCategory[];
     hotNodes: Node[];
     extractedAt: string;
-    totalTopics: number;
 }
 
 /**
@@ -169,7 +168,6 @@ export function extractGuozaokeInfo(htmlContent: string): GuozaokeData {
             nodeCategories,
             hotNodes,
             extractedAt: new Date().toISOString(),
-            totalTopics: topics.length
         };
 
     } catch (error) {
