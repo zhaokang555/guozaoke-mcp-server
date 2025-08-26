@@ -20,7 +20,7 @@ interface Node {
 }
 
 interface Topic {
-    id: number;
+    number: number;
     title: string;
     url?: string;
     author: Author;
@@ -79,7 +79,7 @@ export function extractGuozaokeInfo(htmlContent: string): GuozaokeData {
             const $meta = $main.find('.meta');
 
             const topic: Topic = {
-                id: index + 1,
+                number: index + 1,
                 title: $main.find('.title a').text().trim(),
                 url: $main.find('.title a').attr('href'),
                 author: {
