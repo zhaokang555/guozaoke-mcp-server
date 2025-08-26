@@ -4,6 +4,7 @@ import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js"
 import { z } from "zod";
 import fetch from "node-fetch";
 import { extractGuozaokeInfo } from "./guozaoke-extractor.js";
+import { extractTopicDetails } from "./guozaoke-topic-extractor.js";
 
 // 创建 MCP 服务器实例
 const server = new McpServer({
@@ -60,6 +61,60 @@ server.registerTool(
           {
             type: "text",
             text: `❌ 获取过早客信息时发生错误: ${errorMessage}`
+          }
+        ]
+      };
+    }
+  }
+);
+
+// 注册过早客话题详情获取工具
+server.registerTool(
+  "fetch-guozaoke-topic-details",
+  {
+    title: "获取过早客话题详情",
+    description: "根据话题ID获取过早客论坛的话题详情，包括内容、回复和相关信息。",
+    inputSchema: {
+      topicId: z.number().int().positive().describe("话题ID，例如：123813")
+    }
+  },
+  async ({ topicId }) => {
+    try {
+      const targetUrl = `https://www.guozaoke.com/t/${topicId}`;
+
+      // 发起HTTP请求获取HTML内容
+      const response = await fetch(targetUrl, {
+        headers: {
+          'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP请求失败: ${response.status} ${response.statusText}`);
+      }
+
+      const htmlContent = await response.text();
+
+      // 使用提取函数解析HTML并获取结构化数据
+      const result = extractTopicDetails(htmlContent);
+
+      return {
+        content: [
+          {
+            type: "text",
+            text: JSON.stringify(result, null, 2)
+          }
+        ]
+      };
+
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : '未知错误';
+
+      return {
+        content: [
+          {
+            type: "text",
+            text: `❌ 获取话题详情时发生错误: ${errorMessage}`
           }
         ]
       };
