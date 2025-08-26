@@ -43,7 +43,6 @@ interface GuozaokeData {
     site: SiteInfo;
     topics: Topic[];
     hotTopics: HotTopic[];
-    hotNodes: Node[];
 }
 
 /**
@@ -122,21 +121,10 @@ export function extractGuozaokeInfo(htmlContent: string): GuozaokeData {
             }
         });
 
-        // 提取热门节点
-        const hotNodes: Node[] = [];
-        $('.hot-nodes .ui-content a').each((index, element) => {
-            const $node = $(element);
-            hotNodes.push({
-                name: $node.text().trim(),
-                url: $node.attr('href')
-            });
-        });
-
         return {
             site: siteInfo,
             topics,
             hotTopics,
-            hotNodes,
         };
 
     } catch (error) {
