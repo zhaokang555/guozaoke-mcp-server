@@ -1,6 +1,6 @@
 {
   "name": "guozaoke-mcp-server",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "过早客论坛信息获取 MCP (Model Context Protocol) 服务器",
   "main": "dist/index.js",
   "bin": {
@@ -35,12 +35,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/username/guozaoke-mcp-server.git"
+    "url": "https://github.com/zhaokang555/guozaoke-mcp-server.git"
   },
   "bugs": {
-    "url": "https://github.com/username/guozaoke-mcp-server/issues"
+    "url": "https://github.com/zhaokang555/guozaoke-mcp-server/issues"
   },
-  "homepage": "https://github.com/username/guozaoke-mcp-server#readme",
+  "homepage": "https://github.com/zhaokang555/guozaoke-mcp-server#readme",
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.0.0",
     "@types/node-fetch": "^2.6.13",
