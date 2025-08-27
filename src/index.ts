@@ -209,22 +209,48 @@ server.registerPrompt(
   "show-topic-details",
   {
     title: "展示话题详情",
-    description: "获取并展示过早客论坛的话题详情和所有网友评论",
+    description: "获取并展示过早客论坛的话题详情和所有网友评论。必须提供topicOrder或topicTitle其中之一",
     argsSchema: {
-      topicIdOrName: z.string().describe("话题ID，例如：123813")
+      topicOrder: z.string().optional().describe("话题在列表中的顺序号（从1开始）"),
+      topicTitle: z.string().optional().describe("话题标题（部分匹配）")
     }
   },
-  async ({ topicIdOrName }) => ({
-    messages: [
-      {
-        role: "user",
-        content: {
-          type: "text",
-          text: `请使用 fetch-guozaoke-topic-details 工具获取话题 ${topicIdOrName} 的详细信息，并以结构化的方式展示话题内容、所有网友的评论和回复。请确保包含完整的讨论内容。`
-        }
+  async (args) => {
+    // 验证只能提供其中一个参数
+    const hasTopicOrder = args.topicOrder !== undefined && args.topicOrder.trim() !== "";
+    const hasTopicTitle = args.topicTitle !== undefined && args.topicTitle.trim() !== "";
+
+    if (!hasTopicOrder && !hasTopicTitle) {
+      throw new Error("必须提供 topicOrder 或 topicTitle 其中之一");
+    }
+
+    if (hasTopicOrder && hasTopicTitle) {
+      throw new Error("只能提供 topicOrder 或 topicTitle 其中之一，不能同时提供两个");
+    }
+
+    let instruction;
+    if (hasTopicOrder) {
+      const orderNum = parseInt(args.topicOrder!, 10);
+      if (isNaN(orderNum) || orderNum < 1) {
+        throw new Error("topicOrder 必须是大于0的整数");
       }
-    ]
-  })
+      instruction = `从上下文中获取话题列表，找到第${orderNum}个话题的ID，然后使用 fetch-guozaoke-topic-details 工具获取该话题的详细信息。`;
+    } else {
+      instruction = `从上下文中获取话题列表，根据标题"${args.topicTitle}"找到匹配的话题ID，然后使用 fetch-guozaoke-topic-details 工具获取该话题的详细信息。`;
+    }
+
+    return {
+      messages: [
+        {
+          role: "user",
+          content: {
+            type: "text",
+            text: `${instruction}请以结构化的方式展示话题内容、所有网友的评论和回复。确保包含完整的讨论内容。`
+          }
+        }
+      ]
+    };
+  }
 );
 
 // 错误处理
