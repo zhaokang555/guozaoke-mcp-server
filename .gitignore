@@ -1,6 +1,6 @@
 /node_modules/
 /.idea/.gitignore
-/.idea/learn-mcp.iml
+/.idea/guozaoke-mcp-server.iml
 /.idea/modules.xml
 /.idea/vcs.xml
 /dist/

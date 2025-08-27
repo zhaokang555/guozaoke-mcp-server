@@ -1,25 +1,46 @@
 {
-  "name": "mcp-demo-server",
+  "name": "guozaoke-mcp-server",
   "version": "1.0.0",
-  "description": "一个简单的 MCP (Model Context Protocol) 示例服务器",
+  "description": "过早客论坛信息获取 MCP (Model Context Protocol) 服务器",
   "main": "dist/index.js",
+  "bin": {
+    "guozaoke-mcp-server": "./bin/guozaoke-mcp-server.js"
+  },
   "type": "module",
+  "files": [
+    "dist",
+    "bin",
+    "README.md"
+  ],
   "scripts": {
     "build": "tsc",
+    "clean": "rm -rf dist",
     "start": "node dist/index.js",
     "dev": "tsx src/index.ts",
     "inspect": "node -r dotenv/config --env-file=.env.local node_modules/.bin/mcp-inspector tsx src/index.ts",
-    "test": "tsx tests/guozaoke-extractor.simple.test.ts"
+    "test": "tsx tests/guozaoke-extractor.simple.test.ts",
+    "prepublishOnly": "npm run clean && npm run build"
   },
   "keywords": [
     "mcp",
     "model-context-protocol",
     "ai",
     "claude",
-    "tools"
+    "tools",
+    "guozaoke",
+    "forum",
+    "crawler"
   ],
   "author": "",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/username/guozaoke-mcp-server.git"
+  },
+  "bugs": {
+    "url": "https://github.com/username/guozaoke-mcp-server/issues"
+  },
+  "homepage": "https://github.com/username/guozaoke-mcp-server#readme",
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.0.0",
     "@types/node-fetch": "^2.6.13",

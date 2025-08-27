@@ -1,0 +1,37 @@
+# 源代码目录（只发布编译后的 dist/）
+src/
+
+# 测试文件
+tests/
+*.test.ts
+*.test.js
+
+# 开发配置文件
+.env.local
+.env.local.example
+start-mcp.sh
+mcp-development-guide.md
+test-commands.md
+CLAUDE.md
+
+# IDE 配置
+.idea/
+.vscode/
+.claude/
+
+# Git 相关
+.git/
+.gitignore
+
+# 临时文件和日志
+*.log
+*.tmp
+.DS_Store
+Thumbs.db
+
+# Node.js
+node_modules/
+
+# TypeScript
+tsconfig.json
+*.tsbuildinfo

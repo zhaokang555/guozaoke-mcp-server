@@ -1,101 +1,74 @@
-# MCP Demo Server
+# 过早客 MCP 服务器 (Guozaoke MCP Server)
 
-一个简单的 MCP (Model Context Protocol) 服务器示例，演示了如何使用 JavaScript/TypeScript 创建 MCP 服务器。
+一个专门用于获取过早客论坛信息的 MCP (Model Context Protocol) 服务器，可以通过 AI 助手访问过早客论坛的话题和内容。
+
+## 安装
+
+### 使用 npx（推荐）
+无需安装，直接运行：
+```bash
+npx -y guozaoke-mcp-server
+```
+
+### 全局安装
+```bash
+npm install -g guozaoke-mcp-server
+```
+
+然后运行：
+```bash
+guozaoke-mcp-server
+```
 
 ## 功能特性
 
-这个示例服务器提供了以下功能：
+这个 MCP 服务器提供了以下功能：
 
 ### 工具 (Tools)
-- **fetch-guozaoke**: 获取过早客论坛信息工具，可以从过早客网站获取热门话题、节点信息等结构化数据
+- **fetch-guozaoke-topic-list**: 获取过早客论坛话题列表，支持分页浏览
+- **fetch-guozaoke-topic-details**: 根据话题ID获取详细信息，包括内容和回复
 
-### 资源 (Resources)
-- **config://server-info**: 服务器配置信息
 
 ### 提示模板 (Prompts)
-- **friendly-assistant**: 友好助手提示模板
+- **show-topic-list**: 展示话题列表 - 获取并展示过早客论坛的话题列表
+- **show-topic-details**: 展示话题详情 - 获取并展示过早客论坛的话题详情和所有网友评论
 
 ## 快速开始
 
-### 1. 安装依赖
+### 使用 npx 运行（推荐）
 ```bash
-npm install
+# 直接运行，无需安装
+npx -y guozaoke-mcp-server
 ```
 
-### 2. 开发模式运行
+### 全局安装后运行
 ```bash
-npm run dev
+# 安装
+npm install -g guozaoke-mcp-server
+
+# 运行
+guozaoke-mcp-server
 ```
 
-### 3. 构建项目
+### 环境变量配置（可选）
+如果需要访问需要登录的内容，可以设置 Cookie：
+
 ```bash
-npm run build
+# 设置环境变量
+export GUOZAOKE_COOKIE="session=abc123; auth_token=xyz789"
+
+# 然后运行服务器
+npx -y guozaoke-mcp-server
 ```
 
-### 4. 生产模式运行
-```bash
-npm start
-```
-
-### 5. 使用 MCP Inspector 调试
-```bash
-npm run inspect
-```
-
-然后在浏览器中打开显示的 URL 进行调试。
-
-## 集成到 Claude Desktop
-
-1. 找到 Claude Desktop 配置文件：
-   - macOS: `~/Library/Application Support/Claude/claude_desktop_config.json`
-   - Windows: `%APPDATA%\Claude\claude_desktop_config.json`
-   - Linux: `~/.config/Claude/claude_desktop_config.json`
-
-2. 添加服务器配置：
-
-**推荐配置（使用绝对路径）：**
-```json
-{
-  "mcpServers": {
-    "demo-server": {
-      "command": "/Users/your-username/.nvm/versions/node/v20.11.1/bin/node",
-      "args": ["/path/to/this/project/node_modules/.bin/tsx", "/path/to/this/project/src/index.ts"],
-      "cwd": "/path/to/this/project"
-    }
-  }
-}
-```
-
-**或使用启动脚本（更简洁）：**
-```json
-{
-  "mcpServers": {
-    "demo-server": {
-      "command": "/path/to/this/project/start-mcp.sh",
-      "args": []
-    }
-  }
-}
-```
-
-**注意**: 
-- 将 `/path/to/this/project` 替换为项目实际路径
-- 将 `/Users/your-username/.nvm/versions/node/v20.11.1/bin/node` 中的用户名和Node.js版本替换为你的实际路径
-- 如果遇到Node.js版本冲突，推荐使用绝对路径或启动脚本
-
-3. 重启 Claude Desktop
 
 ## 故障排除
 
-### Node.js 版本冲突
-如果遇到以下错误：
-- `npm ERR! enoent ENOENT: no such file or directory, open '/package.json'`
-- `ERROR: npm v10.2.4 is known not to run on Node.js v10.16.3`
-
-**解决方案**：
-1. 使用绝对路径配置（见上方推荐配置）
-2. 或使用项目提供的 `start-mcp.sh` 启动脚本
-3. 确保 Node.js 版本 >= 18.17.0 或 >= 20.5.0
+### 网络问题
+如果 npx 下载缓慢，可以使用国内镜像：
+```bash
+npx -y --registry=https://registry.npmmirror.com guozaoke-mcp-server
+```
 
 ## 项目结构
 
@@ -112,10 +85,10 @@ npm run inspect
 
 ## 示例用法
 
-启动服务器后，你可以通过 Claude Desktop 使用以下功能：
+启动服务器后，你可以使用以下功能：
 
-- 获取论坛信息: "使用 fetch-guozaoke 工具获取过早客首页信息"
-- 获取特定页面: "使用 fetch-guozaoke 工具获取 https://www.guozaoke.com/some-page 的内容"
+- 获取话题列表: "使用 fetch-guozaoke-topic-list 工具获取第1页话题"
+- 获取话题详情: "使用 fetch-guozaoke-topic-details 工具获取话题ID为123813的详情"
 - 查看服务器信息: "显示 config://server-info 资源"
 
 ## 开发说明

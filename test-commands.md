@@ -25,9 +25,13 @@ npm run inspect
 
 ### Tools (工具)
 
-1. **fetch-guozaoke** - 获取过早客论坛信息
-   - 参数: `{ "url": "https://www.guozaoke.com/" }` (可选，默认为首页)
-   - 输出: 结构化的论坛数据，包括热门话题、节点分类、社区统计等
+1. **fetch-guozaoke-topic-list** - 获取过早客话题列表
+   - 参数: `{ "page": 1 }` (可选，默认为第1页)
+   - 输出: 结构化的话题列表数据，包括话题标题、作者、回复数等
+
+2. **fetch-guozaoke-topic-details** - 获取过早客话题详情
+   - 参数: `{ "topicId": 123813 }` (必需，话题ID)
+   - 输出: 话题详情和所有回复内容
 
 ### Resources (资源)
 
@@ -36,9 +40,13 @@ npm run inspect
 
 ### Prompts (提示模板)
 
-- **friendly-assistant** - 友好助手模板
-  - 参数: `{ "topic": "编程" }`
-  - 生成友好的对话提示
+1. **show-topic-list** - 展示话题列表
+   - 参数: `{ "page": "1" }` (可选，默认为第1页)
+   - 获取并展示过早客论坛的话题列表
+
+2. **show-topic-details** - 展示话题详情
+   - 参数: `{ "topicOrder": "1" }` 或 `{ "topicTitle": "部分标题" }`
+   - 获取并展示话题详情和所有网友评论
 
 ## Claude Desktop 集成配置
 
@@ -47,10 +55,10 @@ npm run inspect
 ```json
 {
   "mcpServers": {
-    "demo-server": {
+    "guozaoke-mcp-server": {
       "command": "node",
-      "args": ["/Users/kang.zhao/zk/2025/learn-mcp/dist/index.js"],
-      "cwd": "/Users/kang.zhao/zk/2025/learn-mcp"
+      "args": ["/Users/kang.zhao/zk/2025/guozaoke-mcp-server/dist/index.js"],
+      "cwd": "/Users/kang.zhao/zk/2025/guozaoke-mcp-server"
     }
   }
 }
@@ -61,10 +69,10 @@ npm run inspect
 ```json
 {
   "mcpServers": {
-    "demo-server": {
+    "guozaoke-mcp-server": {
       "command": "npm",
       "args": ["run", "dev"],
-      "cwd": "/Users/kang.zhao/zk/2025/learn-mcp"
+      "cwd": "/Users/kang.zhao/zk/2025/guozaoke-mcp-server"
     }
   }
 }

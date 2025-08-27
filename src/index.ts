@@ -171,10 +171,13 @@ server.registerResource(
       uri: uri.href,
       mimeType: "application/json",
       text: JSON.stringify({
-        name: "demo-server",
-        version: "1.0.0",
-        features: ["计算器", "问候", "时间查询"],
-        author: "MCP 学习者",
+        name: "guozaoke-mcp-server",
+        version: "1.0.2",
+        features: ["过早客话题列表获取", "话题详情和评论获取", "分页浏览支持"],
+        author: "MCP 开发者",
+        description: "过早客论坛信息获取 MCP 服务器",
+        tools: ["fetch-guozaoke-topic-list", "fetch-guozaoke-topic-details"],
+        prompts: ["show-topic-list", "show-topic-details"],
         created: new Date().toISOString()
       }, null, 2)
     }]
