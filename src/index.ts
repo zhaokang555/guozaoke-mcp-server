@@ -181,23 +181,46 @@ server.registerResource(
   })
 );
 
-// 注册一个提示模板
+// 注册话题列表展示提示模板
 server.registerPrompt(
-  "friendly-assistant",
+  "show-topic-list",
   {
-    title: "友好助手",
-    description: "友好助手的提示模板",
+    title: "展示话题列表",
+    description: "获取并展示过早客论坛的话题列表",
     argsSchema: {
-      topic: z.string().describe("要讨论的话题")
+      page: z.string().optional().describe("要获取的页码，默认为第1页")
     }
   },
-  async ({ topic }) => ({
+  async ({ page }) => ({
     messages: [
       {
         role: "user",
         content: {
           type: "text",
-          text: `请以友好和耐心的方式讨论关于"${topic}"的话题。请提供有用的信息并保持积极的态度。`
+          text: `请使用 fetch-guozaoke-topic-list 工具获取第${page || '1'}页的过早客论坛话题列表。确保展示所有话题。所有话题title使用原文。`
+        }
+      }
+    ]
+  })
+);
+
+// 注册话题详情展示提示模板
+server.registerPrompt(
+  "show-topic-details",
+  {
+    title: "展示话题详情",
+    description: "获取并展示过早客论坛的话题详情和所有网友评论",
+    argsSchema: {
+      topicIdOrName: z.string().describe("话题ID，例如：123813")
+    }
+  },
+  async ({ topicIdOrName }) => ({
+    messages: [
+      {
+        role: "user",
+        content: {
+          type: "text",
+          text: `请使用 fetch-guozaoke-topic-details 工具获取话题 ${topicIdOrName} 的详细信息，并以结构化的方式展示话题内容、所有网友的评论和回复。请确保包含完整的讨论内容。`
         }
       }
     ]
