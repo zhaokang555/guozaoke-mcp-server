@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## 项目概述
 
-这是一个 MCP (Model Context Protocol) 服务器示例项目，使用 TypeScript 构建。MCP 是一个开放协议，用于连接 AI 系统与外部数据源和工具。
+这是一个专门用于获取过早客论坛信息的 MCP (Model Context Protocol) 服务器，使用 TypeScript 构建。MCP 是一个开放协议，用于连接 AI 系统与外部数据源和工具。
 
 ## 常用开发命令
 
@@ -97,7 +97,7 @@ server.registerPrompt(name, config, handler)
 ```json
 {
   "mcpServers": {
-    "demo-server": {
+    "guozaoke-mcp-server": {
       "command": "/Users/your-username/.nvm/versions/node/v20.11.1/bin/node",
       "args": ["/path/to/this/project/node_modules/.bin/tsx", "/path/to/this/project/src/index.ts"],
       "cwd": "/path/to/this/project"
@@ -110,7 +110,7 @@ server.registerPrompt(name, config, handler)
 ```json
 {
   "mcpServers": {
-    "demo-server": {
+    "guozaoke-mcp-server": {
       "command": "/path/to/this/project/start-mcp.sh",
       "args": []
     }
@@ -122,7 +122,7 @@ server.registerPrompt(name, config, handler)
 ```json
 {
   "mcpServers": {
-    "demo-server": {
+    "guozaoke-mcp-server": {
       "command": "npm",
       "args": ["run", "dev"],
       "cwd": "/path/to/this/project"
@@ -133,8 +133,15 @@ server.registerPrompt(name, config, handler)
 
 ## 项目文件结构
 
-- `src/index.ts` - 主服务器文件，包含过早客论坛信息获取工具、资源和提示模板的定义
-- `src/guozaoke-extractor.js` - 过早客论坛HTML解析器，用于提取结构化数据
+- `src/index.ts` - 主服务器文件，包含以下组件：
+  - **fetch-guozaoke-topic-list**: 获取过早客论坛话题列表工具
+  - **fetch-guozaoke-topic-details**: 获取过早客话题详情工具
+  - **server-info**: 服务器配置信息资源
+  - **show-topic-list**: 展示话题列表提示模板
+  - **show-topic-details**: 展示话题详情提示模板
+- `src/guozaoke-extractor.js` - 过早客论坛HTML解析器，用于提取话题列表结构化数据
+- `src/guozaoke-topic-extractor.js` - 过早客话题详情解析器，用于提取话题详情和评论
+- `src/login-detector.js` - 登录页面检测器，用于检测是否需要登录
 - `start-mcp.sh` - MCP 服务器启动脚本，解决 Node.js 版本冲突
 - `dist/` - TypeScript 构建输出目录
 - `mcp-development-guide.md` - 完整的 MCP 开发指南文档
@@ -146,10 +153,3 @@ server.registerPrompt(name, config, handler)
 - 导入路径需包含 `.js` 扩展名（TypeScript ESM 要求）
 - stdio 传输要求日志输出使用 stderr 而非 stdout
 - 服务器启动后会阻塞等待客户端连接，这是正常行为
-
-## 常见问题解决
-
-### Claude Desktop 集成问题
-- **Node.js 版本冲突**: 使用绝对路径或 `start-mcp.sh` 脚本
-- **路径找不到**: 确保 `cwd` 指向正确的项目目录
-- **权限问题**: 给 `start-mcp.sh` 添加执行权限：`chmod +x start-mcp.sh`
